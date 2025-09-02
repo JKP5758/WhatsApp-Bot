@@ -4,6 +4,8 @@ const qrcode = require('qrcode-terminal')
 const { handleMessage, initCommands } = require('./logic')
 
 async function startSock() {
+  const startTime = Date.now() / 1000; // Waktu bot mulai berjalan (dalam detik)
+
   // 1) load commands dulu — penting
   await initCommands()
 
@@ -49,6 +51,11 @@ async function startSock() {
   sock.ev.on('messages.upsert', async ({ messages }) => {
     try {
       for (const msg of messages) {
+        // Abaikan pesan yang diterima sebelum bot jalan
+        if (msg.messageTimestamp < startTime) {
+          continue
+        }
+
         if (!msg.message) continue
         if (msg.key && msg.key.remoteJid === 'status@broadcast') continue
 
