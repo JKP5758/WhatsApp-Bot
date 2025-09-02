@@ -1,0 +1,23 @@
+1. Warrior (Petarung)
+    Role: Tanky melee fighter
+    Bonus Awal:
+    +5 HP
+    +12 ATK
+    +3 DEF
+    Ciri khas: Kuat di awal, cocok sebagai frontliner.
+
+2. Mage (Penyihir)
+    Role: Damage dealer jarak jauh (magic)
+    Bonus Awal:
+    +20 MP
+    +10 INT
+    +5 Magic ATK
+    Ciri khas: HP tipis, tapi damage besar lewat skill.
+    
+3. Rogue/Assassin (Pembunuh)
+    Role: Cepat, crit tinggi
+    Bonus Awal:
+    +5 AGI
+    +5 Crit Rate
+    +5 Evasion
+    Ciri khas: Sering menyerang lebih dulu, bisa crit besar.

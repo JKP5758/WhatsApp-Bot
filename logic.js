@@ -6,7 +6,17 @@ const COMMANDS_DIR = path.join(__dirname, 'commands')
 const PREFIX = '/'
 const commands = new Map()
 const cooldowns = new Map()
-const OWNER_ID = null // optional
+// const OWNER_ID = null // optional
+require('dotenv').config()
+const OWNER_RAW = process.env.OWNER || ''   // "62812...,62813..."
+const OWNER_LIST = OWNER_RAW.split(',')
+    .map(s => s.trim())
+    .filter(Boolean)
+    .map(n => {
+        // normalisasi: hilangkan + jika ada, pastikan punya domain @s.whatsapp.net
+        n = n.replace(/^\+/, '')
+        return n.includes('@') ? n : `${n}@s.whatsapp.net`
+    })
 
 async function initCommands() {
     commands.clear()
@@ -102,8 +112,8 @@ async function handleMessage(sock, msg) {
             return
         }
 
-        if (cmd.ownerOnly && OWNER_ID && from !== OWNER_ID) {
-            await makeReply(sock, from, '❌ Hanya owner yang bisa menggunakan perintah ini.', msg)
+        if (cmd.ownerOnly && !OWNER_LIST.includes(from)) {
+            await makeReply(sock, from, '❌ Command ini hanya bisa digunakan oleh owner.', msg)
             return
         }
 

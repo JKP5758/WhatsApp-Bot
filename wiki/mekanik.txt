@@ -1,0 +1,7 @@
+Level up item: Item dapat naik level → menambah stat (misalnya +10% stat setiap naik level).
+
+Durability: Jika durability = 0 → item rusak, tidak bisa dipakai.
+
+Inventory: Menyimpan semua item. Stackable item (misal potion) ditumpuk berdasarkan quantity.
+
+Equipment: Hanya 1 slot tiap tipe (weapon, armor, helmet, boots, accessory).

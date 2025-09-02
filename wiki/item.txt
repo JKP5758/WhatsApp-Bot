@@ -1,0 +1,19 @@
+Pedang Batu
+    Type: Weapon
+    Stat: +5 ATK, +2 Crit Rate
+    Bisa di-level up
+
+Armor Kulit
+    Type: Armor
+    Stat: +3 DEF, +20 HP
+    Bisa di-level up
+
+Potion HP
+    Type: Consumable
+    Efek: Heal 50 HP
+    Stackable
+
+Potion MP
+    Type: Consumable
+    Efek: Restore 30 MP
+    Stackable

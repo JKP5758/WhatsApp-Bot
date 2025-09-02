@@ -1,0 +1,13 @@
+Heal (HP) → memulihkan sejumlah HP.
+
+Mana Restore (MP) → memulihkan sejumlah MP.
+
+Poison → kurangi HP tiap giliran.
+
+Burn → damage per giliran + pengurangan DEF.
+
+Stun → target tidak bisa bergerak 1 turn.
+
+Buff (ATK/DEF/Speed, dll.) → peningkatan sementara stat.
+
+Debuff (ATK/DEF/Speed, dll.) → penurunan sementara stat.

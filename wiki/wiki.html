@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RPG Wiki — Database & Terms</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* small custom tweaks */
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(44, 44, 44, 0.6), rgba(22, 22, 22, 0.6));
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-100 min-h-screen">
+  <div class="max-w-5xl mx-auto p-6">
+    <header class="flex items-center gap-4 mb-8">
+      <div class="p-3 rounded-lg bg-slate-700/40 border border-slate-600">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" class="text-amber-400">
+          <path d="M12 2l3 6 6 .5-4.5 4 1 6L12 16l-5.5 2.5 1-6L3 8.5 9 8 12 2z" stroke="currentColor" stroke-width="0.5"
+            stroke-linejoin="round"></path>
+        </svg>
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold">RPG Wiki — Database & Terms</h1>
+        <p class="text-sm text-slate-300">Dokumentasi singkat tentang tabel, stat, rarity, dan singkatan — dibuat buat
+          project text-RPG via WhatsApp.</p>
+      </div>
+    </header>
+
+    <!-- Overview -->
+    <section class="mb-6">
+      <div class="card p-5 rounded-xl border border-slate-700 shadow-sm">
+        <h2 class="text-lg font-semibold">Ringkasan Struktur Database</h2>
+        <p class="text-slate-300 mt-2">Tabel utama: <span class="font-medium">users</span>, <span
+            class="font-medium">characters</span>, <span class="font-medium">items</span>, <span
+            class="font-medium">inventory</span>, <span class="font-medium">equipment</span>, <span
+            class="font-medium">enemies</span>, <span class="font-medium">enemy_drops</span>.</p>
+        <div class="mt-4 flex flex-wrap gap-3 text-sm">
+          <span class="px-3 py-1 bg-emerald-600/20 rounded-full border border-emerald-600">users</span>
+          <span class="px-3 py-1 bg-cyan-600/20 rounded-full border border-cyan-600">characters</span>
+          <span class="px-3 py-1 bg-amber-600/20 rounded-full border border-amber-600">items</span>
+          <span class="px-3 py-1 bg-violet-600/20 rounded-full border border-violet-600">inventory</span>
+          <span class="px-3 py-1 bg-rose-600/20 rounded-full border border-rose-600">equipment</span>
+          <span class="px-3 py-1 bg-sky-600/20 rounded-full border border-sky-600">enemies</span>
+          <span class="px-3 py-1 bg-slate-600/20 rounded-full border border-slate-600">enemy_drops</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tables detail -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <article class="card p-5 rounded-xl border border-slate-700">
+        <h3 class="font-semibold text-lg">users</h3>
+        <p class="text-slate-300 text-sm mt-1">Akun pemain, terkait nomor WA. Simpel & unik.</p>
+        <dl class="mt-3 text-sm">
+          <dt class="font-medium">id</dt>
+          <dd class="text-slate-300">INT AUTO_INCREMENT (PK)</dd>
+          <dt class="font-medium mt-2">code</dt>
+          <dd class="text-slate-300">alias singkat untuk referensi (example: <span class="mono">u_kakak</span>)</dd>
+          <dt class="font-medium mt-2">phone</dt>
+          <dd class="text-slate-300">nomor WA</dd>
+          <dt class="font-medium mt-2">name</dt>
+          <dd class="text-slate-300">display name</dd>
+        </dl>
+      </article>
+
+      <article class="card p-5 rounded-xl border border-slate-700">
+        <h3 class="font-semibold text-lg">characters</h3>
+        <p class="text-slate-300 text-sm mt-1">Data hero/karakter per user. Resource ini di-update saat battle/progress.
+        </p>
+        <dl class="mt-3 text-sm">
+          <dt class="font-medium">id / code</dt>
+          <dd class="text-slate-300">INT PK, plus alias (example: <span class="mono">char_arjuna</span>)</dd>
+          <dt class="font-medium mt-2">user_id</dt>
+          <dd class="text-slate-300">FK ke users.id</dd>
+          <dt class="font-medium mt-2">level / xp</dt>
+          <dd class="text-slate-300">progress karakter</dd>
+          <dt class="font-medium mt-2">max_hp / current_hp</dt>
+          <dd class="text-slate-300">NYAWA: max dan keadaan saat ini</dd>
+          <dt class="font-medium mt-2">max_mp / current_mp</dt>
+          <dd class="text-slate-300">MANA: max dan keadaan saat ini</dd>
+          <dt class="font-medium mt-2">gold</dt>
+          <dd class="text-slate-300">uang in-game</dd>
+          <dt class="font-medium mt-2">stats (JSON)</dt>
+          <dd class="text-slate-300">atribut base: <span class="mono">{"str":15,"agi":8,"int":5,"vit":12}</span></dd>
+        </dl>
+      </article>
+
+      <article class="card p-5 rounded-xl border border-slate-700">
+        <h3 class="font-semibold text-lg">items</h3>
+        <p class="text-slate-300 text-sm mt-1">Katalog semua item: weapon, armor, consumable, material, dll.</p>
+        <dl class="mt-3 text-sm">
+          <dt class="font-medium">id / code</dt>
+          <dd class="text-slate-300">INT PK & alias (ex: <span class="mono">slime_jelly</span>)</dd>
+          <dt class="font-medium mt-2">name / type / category</dt>
+          <dd class="text-slate-300">tipe & subkategori (weapon &rarr; sword/dagger/axe)</dd>
+          <dt class="font-medium mt-2">rarity</dt>
+          <dd class="text-slate-300">common &rarr; legendary (lihat tabel rarity di bawah)</dd>
+          <dt class="font-medium mt-2">stackable</dt>
+          <dd class="text-slate-300">boolean (potion = 1, weapon = 0)</dd>
+          <dt class="font-medium mt-2">base_stats (JSON)</dt>
+          <dd class="text-slate-300">efek dasar: <span class="mono">{"atk":10,"crit_rate":0.05}</span></dd>
+        </dl>
+      </article>
+
+      <article class="card p-5 rounded-xl border border-slate-700">
+        <h3 class="font-semibold text-lg">inventory &amp; equipment</h3>
+        <p class="text-slate-300 text-sm mt-1">Inventory menyimpan instance item (bisa stackable atau unik). Equipment
+          menunjuk instance yang dipakai.</p>
+        <dl class="mt-3 text-sm">
+          <dt class="font-medium">inventory</dt>
+          <dd class="text-slate-300">fields penting: <span class="mono">item_id, quantity, level, durability,
+              is_stackable</span></dd>
+          <dt class="font-medium mt-2">equipment</dt>
+          <dd class="text-slate-300">fields: <span class="mono">character_id, inventory_id, slot</span></dd>
+          <dt class="font-medium mt-2">unique items</dt>
+          <dd class="text-slate-300">weapon/armor yang punya level/durability harus 1 row = 1 instance</dd>
+        </dl>
+      </article>
+
+      <article class="card p-5 rounded-xl border border-slate-700">
+        <h3 class="font-semibold text-lg">enemies & enemy_drops</h3>
+        <p class="text-slate-300 text-sm mt-1">Enemies scalable memakai <span class="mono">base_stats</span> + <span
+            class="mono">growth</span> (per-level).</p>
+        <dl class="mt-3 text-sm">
+          <dt class="font-medium">enemies</dt>
+          <dd class="text-slate-300">fields: <span class="mono">name, code, type, base_level, base_stats(JSON),
+              growth(JSON)</span></dd>
+          <dt class="font-medium mt-2">enemy_drops</dt>
+          <dd class="text-slate-300">fields: <span class="mono">enemy_id, item_id, drop_rate, min_quantity,
+              max_quantity</span></dd>
+        </dl>
+      </article>
+    </section>
+
+    <!-- Stats and formulas -->
+    <section class="card p-5 rounded-xl border border-slate-700 mb-6">
+      <h2 class="text-lg font-semibold">Stats &amp; Rumus</h2>
+      <div class="mt-3 text-sm text-slate-300">
+        <p><strong>Primary stats</strong>: STR, AGI, INT, VIT, DEX — nilai base yang mempengaruhi secondary stats.</p>
+        <p class="mt-2"><strong>Secondary stats</strong> (contoh perhitungan):</p>
+        <ul class="list-disc ml-5 mt-2">
+          <li><span class="mono">HP_base</span> = <span class="mono">VIT * 10 + class_hp_bonus</span></li>
+          <li><span class="mono">max_hp</span> = <span class="mono">HP_base + equipment_hp_bonus + buff_hp</span></li>
+          <li><span class="mono">attack</span> = <span class="mono">weapon_atk + STR * 1 + class_bonus</span></li>
+          <li><span class="mono">crit_rate</span> = <span class="mono">base_crit + DEX * 0.01 + equipment_bonus</span>
+          </li>
+          <li><span class="mono">accuracy</span> = <span class="mono">base_acc + DEX * 0.02</span></li>
+        </ul>
+
+        <p class="mt-4"><strong>Enemy scaling</strong>: saat spawn level L:</p>
+        <pre class="bg-slate-800 p-3 rounded mt-2 mono text-sm">stat(L) = base_stat + growth * (L - base_level)</pre>
+
+        <p class="mt-3">Contoh: <span class="mono">Goblin</span> base_hp=50, hp_growth=8, base_level=2. Untuk level 10 →
+          HP = 50 + 8*(10-2) = 114.</p>
+      </div>
+    </section>
+
+    <!-- Rarity -->
+    <section class="mb-6 card p-5 rounded-xl border border-slate-700">
+      <h2 class="text-lg font-semibold">Rarity (kelangkaan)</h2>
+      <div class="mt-3 text-sm text-slate-300 grid grid-cols-2 gap-3">
+        <div class="flex items-center gap-3"><span class="px-3 py-1 rounded-full bg-slate-700 border">common</span>
+          <div>Item biasa, drop sering</div>
+        </div>
+        <div class="flex items-center gap-3"><span class="px-3 py-1 rounded-full bg-emerald-700 border">uncommon</span>
+          <div>Kualitas sedikit lebih baik</div>
+        </div>
+        <div class="flex items-center gap-3"><span class="px-3 py-1 rounded-full bg-amber-700 border">rare</span>
+          <div>Drop jarang, sering unik</div>
+        </div>
+        <div class="flex items-center gap-3"><span class="px-3 py-1 rounded-full bg-indigo-700 border">epic</span>
+          <div>Langka & kuat</div>
+        </div>
+        <div class="flex items-center gap-3"><span class="px-3 py-1 rounded-full bg-rose-700 border">legendary</span>
+          <div>Paling langka, sangat kuat</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Abbreviations -->
+    <section class="card p-5 rounded-xl border border-slate-700 mb-6">
+      <h2 class="text-lg font-semibold">Singkatan &amp; Istilah</h2>
+      <div class="mt-3 text-sm text-slate-300">
+        <dl>
+          <dt class="font-medium">HP</dt>
+          <dd>Hit Points — nyawa karakter.</dd>
+          <dt class="font-medium mt-2">MP</dt>
+          <dd>Mana Points — resource skill.</dd>
+          <dt class="font-medium mt-2">EXP / XP</dt>
+          <dd>Experience Points — untuk naik level.</dd>
+          <dt class="font-medium mt-2">Atk</dt>
+          <dd>Attack — kekuatan serangan fisik.</dd>
+          <dt class="font-medium mt-2">Def</dt>
+          <dd>Defense — mengurangi damage masuk.</dd>
+          <dt class="font-medium mt-2">STR / AGI / INT / VIT / DEX</dt>
+          <dd>Primary stats (Strength, Agility, Intelligence, Vitality, Dexterity).</dd>
+          <dt class="font-medium mt-2">Crit / Crit Rate / Crit Dmg</dt>
+          <dd>Kritis: peluang & multiplier damage.</dd>
+          <dt class="font-medium mt-2">TTL</dt>
+          <dd>Time-to-live — biasanya untuk session/context cache.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- Examples & SQL snippets -->
+    <section class="card p-5 rounded-xl border border-slate-700 mb-6">
+      <h2 class="text-lg font-semibold">Contoh SQL &amp; Use Cases</h2>
+      <div class="mt-3 text-sm text-slate-300">
+        <p class="mb-2">Ambil drops readable (join nama/code):</p>
+        <pre class="bg-slate-800 p-3 rounded mono text-sm">SELECT ed.id, e.code AS enemy_code, e.name AS enemy_name,
+  i.code AS item_code, i.name AS item_name, ed.drop_rate, ed.min_quantity, ed.max_quantity
+FROM enemy_drops ed
+JOIN enemies e ON ed.enemy_id = e.id
+JOIN items i ON ed.item_id = i.id;
+</pre>
+
+        <p class="mb-2">Hitung stat enemy level L (example di backend):</p>
+        <pre class="bg-slate-800 p-3 rounded mono text-sm">-- pseudo-SQL / logic in app
+-- enemyRow.base_stats and enemyRow.growth are JSON objects
+hp = enemy.base_stats.hp + enemy.growth.hp * (L - enemy.base_level)</pre>
+
+        <p class="mb-2">Update character heal (cap at max):</p>
+        <pre class="bg-slate-800 p-3 rounded mono text-sm">UPDATE characters
+SET current_hp = LEAST(current_hp + 50, max_hp)
+WHERE id = ?;</pre>
+      </div>
+    </section>
+
+    <footer class="text-center text-slate-400 text-sm mt-6">Made with ❤️ — jika mau ditambahin sample queries atau
+      export ke PDF bilang aja.</footer>
+  </div>
+
+  <!-- Contoh SQL Lengkap -->
+  <section class="card p-5 rounded-xl border border-slate-700 mb-6">
+    <h2 class="text-lg font-semibold">Contoh SQL — Snippet Siap Pakai</h2>
+    <div class="mt-3 text-sm text-slate-300">
+      <p class="mb-2">1) Buat tabel inti (ringkas):</p>
+      <pre class="bg-slate-800 p-3 rounded mono text-sm">-- users, items, enemies, characters, inventory, equipment, enemy_drops
+CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY, code VARCHAR(100) UNIQUE, phone VARCHAR(20), name VARCHAR(255), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+
+CREATE TABLE items (id INT AUTO_INCREMENT PRIMARY KEY, code VARCHAR(100) UNIQUE, name VARCHAR(100), type ENUM('weapon','armor','consumable','material','misc'), category VARCHAR(50), rarity ENUM('common','uncommon','rare','epic','legendary') DEFAULT 'common', stackable TINYINT(1) DEFAULT 1, base_stats JSON DEFAULT JSON_OBJECT(), description TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+
+CREATE TABLE enemies (id INT AUTO_INCREMENT PRIMARY KEY, code VARCHAR(100) UNIQUE, name VARCHAR(100), type ENUM('beast','undead','demon','humanoid','elemental','other'), base_level INT DEFAULT 1, base_stats JSON NOT NULL, growth JSON NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+
+CREATE TABLE characters (id INT AUTO_INCREMENT PRIMARY KEY, code VARCHAR(100) UNIQUE, user_id INT, name VARCHAR(100), class VARCHAR(50), level INT DEFAULT 1, xp BIGINT DEFAULT 0, max_hp INT DEFAULT 100, current_hp INT DEFAULT 100, max_mp INT DEFAULT 50, current_mp INT DEFAULT 50, gold BIGINT DEFAULT 0, stats JSON DEFAULT JSON_OBJECT(), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE);
+
+CREATE TABLE inventory (id INT AUTO_INCREMENT PRIMARY KEY, character_id INT, item_id INT, quantity INT DEFAULT 1, level INT DEFAULT 1, exp INT DEFAULT 0, durability INT DEFAULT NULL, is_stackable TINYINT(1) DEFAULT 1, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE, FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE);
+
+CREATE TABLE equipment (id INT AUTO_INCREMENT PRIMARY KEY, character_id INT, inventory_id INT, slot ENUM('weapon','helmet','armor','boots','accessory'), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE, FOREIGN KEY (inventory_id) REFERENCES inventory(id) ON DELETE CASCADE);
+
+CREATE TABLE enemy_drops (id INT AUTO_INCREMENT PRIMARY KEY, enemy_id INT, item_id INT, drop_rate DECIMAL(5,2) DEFAULT 100.00, min_quantity INT DEFAULT 1, max_quantity INT DEFAULT 1, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (enemy_id) REFERENCES enemies(id) ON DELETE CASCADE, FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE);
+</pre>
+
+      <p class="mb-2">2) Insert contoh item & enemy:</p>
+      <pre class="bg-slate-800 p-3 rounded mono text-sm">INSERT INTO items (code,name,type,rarity,stackable,base_stats,description) VALUES
+('slime_jelly','Slime Jelly','material','common',1,JSON_OBJECT(),'Lendir slime untuk alkimia'),
+('monster_claw','Monster Claw','material','common',1,JSON_OBJECT(),'Cakar monster'),
+('goblin_ear','Goblin Ear','material','common',1,JSON_OBJECT(),'Telinga goblin');
+
+INSERT INTO enemies (code,name,type,base_level,base_stats,growth) VALUES
+('slime','Slime','beast',1, JSON_OBJECT('hp',30,'atk',5,'def',1,'exp',5,'gold',2), JSON_OBJECT('hp',5,'atk',1,'def',1,'exp',2,'gold',1)),
+('goblin','Goblin','humanoid',2, JSON_OBJECT('hp',50,'atk',8,'def',3,'exp',10,'gold',5), JSON_OBJECT('hp',8,'atk',2,'def',1,'exp',3,'gold',2));
+</pre>
+
+      <p class="mb-2">3) Tambah drop (pakai code agar tidak perlu UUID langsung):</p>
+      <pre class="bg-slate-800 p-3 rounded mono text-sm">-- insert by joining codes (safe)
+INSERT INTO enemy_drops (enemy_id,item_id,drop_rate,min_quantity,max_quantity)
+SELECT e.id, i.id, 80.00, 1, 2 FROM enemies e JOIN items i ON i.code='slime_jelly' WHERE e.code='slime';
+
+INSERT INTO enemy_drops (enemy_id,item_id,drop_rate,min_quantity,max_quantity)
+SELECT e.id, i.id, 20.00, 1, 1 FROM enemies e JOIN items i ON i.code='monster_claw' WHERE e.code='slime';
+</pre>
+
+      <p class="mb-2">4) Ambil drops secara probabilistik (contoh sederhana di SQL):</p>
+      <pre class="bg-slate-800 p-3 rounded mono text-sm">-- Pilih semua candidate drops, lakukan roll per row
+SELECT it.id AS item_id, it.code AS item_code, it.name AS item_name,
+  FLOOR(RAND() * (ed.max_quantity - ed.min_quantity + 1)) + ed.min_quantity AS quantity
+FROM enemy_drops ed
+JOIN items it ON it.id = ed.item_id
+WHERE ed.enemy_id = ? AND RAND() <= ed.drop_rate / 100;
+
+-- catatan: RAND() dievaluasi per row; gunakan di aplikasi untuk kontrol lebih baik.
+</pre>
+
+      <p class="mb-2">5) Hitung stat musuh pada level L (pakai JSON di MySQL):</p>
+      <pre class="bg-slate-800 p-3 rounded mono text-sm">SET @L = 10;
+SELECT e.id, e.code, e.name,
+  CAST(JSON_EXTRACT(e.base_stats,'$.hp') AS SIGNED) + CAST(JSON_EXTRACT(e.growth,'$.hp') AS SIGNED) * (@L - e.base_level) AS hp,
+  CAST(JSON_EXTRACT(e.base_stats,'$.atk') AS SIGNED) + CAST(JSON_EXTRACT(e.growth,'$.atk') AS SIGNED) * (@L - e.base_level) AS atk
+FROM enemies e
+WHERE e.code = 'goblin';
+</pre>
+
+      <p class="mb-2">6) Update heal & cap by max_hp:</p>
+      <pre class="bg-slate-800 p-3 rounded mono text-sm">-- heal character by value ?
+UPDATE characters SET current_hp = LEAST(current_hp + ?, max_hp) WHERE id = ?;
+
+-- consume a potion (reduce inventory quantity)
+UPDATE inventory SET quantity = GREATEST(quantity - 1, 0) WHERE id = ? AND is_stackable = 1;
+</pre>
+
+      <p class="mb-2">7) Ambil inventory readable (join names):</p>
+      <pre class="bg-slate-800 p-3 rounded mono text-sm">SELECT inv.id, it.code AS item_code, it.name AS item_name, inv.quantity, inv.level, inv.durability
+FROM inventory inv
+JOIN items it ON it.id = inv.item_id
+WHERE inv.character_id = ?;
+</pre>
+
+      <p class="mt-4">Tip: untuk logika kompleks (drop roll, equipment effects, stat merges), lebih aman melakukan
+        perhitungan di backend (Node.js) karena SQL memiliki keterbatasan untuk control flow & error handling. Gunakan
+        SQL untuk storage & simple selection, lakukan game logic di aplikasi.</p>
+    </div>
+  </section>
+
+  <footer class="text-center text-slate-400 text-sm mt-6">Made with ❤️ — jika mau aku export HTML ini ke file atau PDF
+    bilang aja.</footer>
+  </div>
+</body>
+
+</html>

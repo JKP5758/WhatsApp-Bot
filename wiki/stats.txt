@@ -1,0 +1,46 @@
+HP (Hit Point / Nyawa)
+    Jika 0 = karakter mati.
+    Bisa ditambah lewat VIT, armor, atau item.
+
+MP (Mana Point)
+    Resource untuk skill/magic.
+    Bisa ditambah lewat INT.
+
+ATK (Attack)
+    Damage dasar serangan fisik.
+
+DEF (Defense)
+    Mengurangi damage fisik yang diterima.
+
+MAG ATK (Magic Attack)
+    Damage dasar serangan sihir.
+
+MAG DEF (Magic Defense)
+    Mengurangi damage sihir yang diterima.
+
+STR (Strength / Kekuatan)
+    Menambah ATK dan sedikit HP.
+
+AGI (Agility / Kelincahan)
+    Menambah Speed (giliran cepat) dan Crit Rate.
+
+INT (Intelligence / Kecerdasan)
+    Menambah Magic Attack dan MP.
+
+VIT (Vitality / Ketahanan)
+    Menambah HP dan sedikit DEF.
+
+Crit Rate (%)
+    Persentase serangan kritikal.
+
+Crit Damage (%)
+    Bonus damage saat kritikal (misal default 150%).
+
+Accuracy (%)
+    Kemungkinan serangan mengenai target.
+
+Evasion (%)
+    Kemungkinan menghindari serangan fisik.
+
+Speed
+    Menentukan urutan giliran (di sistem turn-based).
