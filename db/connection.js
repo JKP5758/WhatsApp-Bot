@@ -12,7 +12,7 @@ const {
 } = process.env
 
 const pool = mysql.createPool({
-  host: DB_HOST,
+  host: Number(DB_HOST), // Hilangkan Number apabila memakai domain bukan IP
   port: Number(DB_PORT),
   user: DB_USER,
   password: DB_PASSWORD,
@@ -20,6 +20,7 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: Number(DB_CONNECTION_LIMIT || 10),
   queueLimit: 0,
+  connectTimeout: 10000,
   namedPlaceholders: true
 })
 
