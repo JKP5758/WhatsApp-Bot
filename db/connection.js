@@ -1,38 +1,38 @@
 // db/connection.js
-require('dotenv').config()
-const mysql = require('mysql2/promise')
+require('dotenv').config();
+const mysql = require('mysql2/promise');
 
 const {
   DB_HOST = '127.0.0.1',
-  DB_PORT = 3306,
+  DB_PORT = '3306',
   DB_USER = 'root',
   DB_PASSWORD = '',
   DB_DATABASE = '',
-  DB_CONNECTION_LIMIT = 10
-} = process.env
+  DB_CONNECTION_LIMIT = '10'
+} = process.env;
 
 const pool = mysql.createPool({
-  host: Number(DB_HOST), // Hilangkan Number apabila memakai domain bukan IP
-  port: Number(DB_PORT),
+  host: DB_HOST, // PENTING: jangan Number() — host harus string
+  port: parseInt(DB_PORT, 10),
   user: DB_USER,
   password: DB_PASSWORD,
   database: DB_DATABASE || undefined,
   waitForConnections: true,
-  connectionLimit: Number(DB_CONNECTION_LIMIT || 10),
+  connectionLimit: parseInt(DB_CONNECTION_LIMIT, 10) || 10,
   queueLimit: 0,
-  connectTimeout: 10000,
+  connectTimeout: 20000, // lebih longgar, supaya gak cepat timeout
   namedPlaceholders: true
-})
+});
 
 // helper: query(sql, params)
 async function query(sql, params = []) {
-  const [rows] = await pool.query(sql, params)
-  return rows
+  const [rows] = await pool.query(sql, params);
+  return rows;
 }
 
 // optional: get connection (untuk transaksi nanti)
 async function getConnection() {
-  return pool.getConnection()
+  return pool.getConnection();
 }
 
-module.exports = { pool, query, getConnection }
+module.exports = { pool, query, getConnection };
